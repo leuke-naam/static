@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /documents/
+
+Sitemap: https://stichtingsticky.nl/sitemap.xml

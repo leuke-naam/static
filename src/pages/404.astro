@@ -1,0 +1,16 @@
+---
+import { Image } from 'astro:assets'
+
+import logo from '~/assets/logo-white.svg'
+
+import Layout from '~/layouts/base.astro'
+---
+
+<Layout
+  title="404 | Stichting Sticky"
+  class="items-center justify-center gap-4 text-white bg-pink">
+  <Image class="inline w-24 h-auto" src={logo} alt="Stichting Sticky's logo" />
+  <h1 class="text-lg">
+    Not Found <code class="p-1 m-1 rounded-sm bg-dark-grey/20">404</code>
+  </h1>
+</Layout>

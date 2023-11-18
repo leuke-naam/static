@@ -1,0 +1,35 @@
+{
+  "name": "@stichtingsticky/static",
+  "license": "MIT",
+  "type": "module",
+  "version": "0.1.0",
+  "homepage": "https://stichtingsticky.nl/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StichtingSticky/static.git"
+  },
+  "author": "Sem van Nieuwenhuizen <bestuur@stichtingsticky.nl>",
+  "scripts": {
+    "build": "astro build",
+    "check": "astro check",
+    "format": "prettier --write .",
+    "preview": "astro preview",
+    "start": "astro check --watch & astro dev"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.2.1",
+    "@astrojs/sitemap": "^3.0.3",
+    "@astrojs/tailwind": "^5.0.2",
+    "@fontsource/lato": "^5.0.17",
+    "astro": "^3.5.5",
+    "astro-compress": "^2.2.3",
+    "astro-critters": "^2.0.11",
+    "prettier": "^3.1.0",
+    "prettier-plugin-astro": "^0.12.2",
+    "prettier-plugin-tailwindcss": "^0.5.7",
+    "sharp": "^0.32.6",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.2.2"
+  },
+  "private": true
+}

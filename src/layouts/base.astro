@@ -1,0 +1,65 @@
+---
+import '@fontsource/lato/300.css'
+import '@fontsource/lato/700.css'
+
+import '~/styles/global.css'
+
+export interface Props {
+  title?: string
+  description?: string,
+  class?: string,
+}
+
+const {
+  title = 'Stichting Sticky',
+  description = 'Stichting Sticky is een organisatie die zich bezig houdt met het organiseren van activiteiten ten behoeve van de te Utrecht gevestigde vereniging Studievereniging Sticky.',
+  class: styles = 'bg-off-white',
+} = Astro.props as Props
+
+const keywords = [
+  'stichting',
+  'studie',
+  'studievereniging',
+  'Sticky',
+  'Utrecht',
+  'student',
+  'students',
+  'computer',
+  'information',
+  'science',
+  'sciences',
+  'university',
+]
+---
+
+<!DOCTYPE html>
+
+<html lang="nl-NL" class="font-light font-sans-serif text-dark-grey">
+
+<head>
+  <meta charset="utf-8" />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <meta name="theme-color" content="#e46ca7" />
+  <meta name="color-scheme" content="only light" />
+
+  <meta name="author" content="Stichting Sticky" />
+  <meta name="description" content={description} />
+  <meta name="keywords" content={keywords.join()} />
+
+  <meta name="generator" content={Astro.generator} />
+
+  <link rel="manifest" href="/manifest.json" />
+
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+
+  <title>{title}</title>
+</head>
+
+<body class:list={['flex', 'flex-col', 'justify-center', 'min-h-screen', styles?.split(' ')]}>
+  <slot />
+</body>
+
+</html>

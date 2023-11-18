@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+
+import logo from '~/assets/logo.svg'
+
+import Layout from '~/layouts/base.astro'
+
+const board = await getCollection('board')
+
+const year = new Date().getFullYear()
+---
+
+<Layout>
+  <header class="flex items-center justify-center gap-4 my-8 sm:my-12 h-14 sm:h-16">
+    <Image
+      class="inline h-auto w-14 sm:w-16"
+      src={logo}
+      alt="Stichting Sticky's logo" />
+    <h1 class="inline text-3xl leading-none sm:text-4xl">Stichting Sticky</h1>
+  </header>
+
+  <main class="grid max-w-4xl gap-2 px-8 my-4 sm:px-16 md:px-2 md:mx-auto sm:grid-cols-3">
+    <section>
+      <h2 class="my-4 text-2xl font-bold text-center text-black">Doelstelling</h2>
+      <p class="my-4">
+        Stichting Sticky organiseert activiteiten ten behoeve van Studievereniging Sticky.
+      </p>
+      <p class="my-4">
+        Onze statuten zijn gedeponeerd in Utrecht. Een digitale versie kunt u <a class="underline transition-colors hover:text-dark-grey/60" href="/documents/statuten.pdf">hier</a> vinden.
+      </p>
+
+      <h3 class="my-4 text-lg font-bold text-black">Actueel</h3>
+      <a class="underline transition-colors hover:text-dark-grey/60" href="https://execut.nl/">Studentenconferentie exec(ut)</a>
+    </section>
+
+    <section>
+      <h2 class="my-4 text-2xl font-bold text-center text-black">Bestuur</h2>
+      <p class="my-4">
+        Het bestuur van Stichting Sticky bestaat uit de volgende personen:
+      </p>
+
+      <ul class="pl-6 my-2 list-disc">
+        {board.map(({ data }) => {
+          const { name, role, contact } = data
+
+          return <li>
+            <p><a class="font-bold transition-colors hover:text-dark-grey/60" href={contact}>{name}</a> - {role}</p>
+          </li>
+        })}
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="my-4 text-2xl font-bold text-center text-black">Contact</h2>
+      <p class="my-2">
+        <a class="underline transition-colors hover:text-dark-grey/60" href="mailto:bestuur@stichtingsticky.nl">bestuur@stichtingsticky.nl</a>
+      </p>
+
+      <p><span class="font-bold">KvK</span> 61972525</p>
+      <p><span class="font-bold">BTW</span> NL854573665B01</p>
+
+      <h3 class="my-2 text-lg font-bold text-black">Vestigingsadres</h3>
+
+      <address>
+        Stichting Sticky<br />
+        Princetonplein 5<br />
+        3584 CC Utrecht
+      </address>
+
+      <h3 class="my-2 text-lg font-bold text-black">Correspondentieadres</h3>
+
+      <address>
+        Stichting Sticky<br />
+        Buys Ballotgebouw 2.81<br />
+        Winthontlaan 30 C<br />
+        3526 KV Utrecht
+      </address>
+    </section>
+  </main>
+
+  <footer class="my-8 text-sm text-center sm:my-12">
+    <p>Copyright {year} Stichting Sticky</p>
+    <p>Alle rechten voorbehouden.</p>
+  </footer>
+</Layout>

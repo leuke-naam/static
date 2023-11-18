@@ -1,0 +1,72 @@
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Runs on pushes targeting the default branch
+  push:
+    branches: [main]
+
+  # Runs on the first day of each year to update the copyright date
+  schedule:
+    - cron: '0 0 1 1 *'
+
+# Ensure only the latest job runs on the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUILD_PATH: '.' # default value when not using subfolders
+
+jobs:
+  build:
+    name: Generate build artifacts
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup `pnpm`
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Setup `node`
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+          cache: pnpm
+
+      # This step will fail if `pnpm-lock.yaml` is missing or an update is needed
+      - name: Install dependencies
+        working-directory: ${{ env.BUILD_PATH }}
+        run: |
+          pnpm install --frozen-lockfile
+
+      - name: Generate a production build
+        working-directory: ${{ env.BUILD_PATH }}
+        run: |
+          pnpm build
+
+      # `astro` will produce a build in `dist/`
+      - name: Upload build artifacts
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ${{ env.BUILD_PATH }}/dist
+
+  deploy:
+    needs: build
+    name: Deploy to GitHub Pages
+
+    # Grant `GITHUB_TOKEN` the permissions required to deploy
+    permissions:
+      pages: write
+      id-token: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
